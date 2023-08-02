@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+var flagOver = false;
+var rnd = parseInt(Math.random()*7 + 1);
+
+class Block{
+	constructor(){
+		this.type = rnd;
+		this.status = 0
+		this.i = 2
+		this.j = 3
+	}
+}
+
+var b = new Block();
+
+var block2D = [
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0]
+]
+
+var stack2D = [
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0]
+]
+
+var displ2D = [
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0],
+	[0,0,0,0,0, 0,0,0,0,0]
+]
+
+function setBlock2D(){
+	for(var i=0; i<25; i++) {
+		for(var j=0; j<10; j++) {
+			block2D[i][j] = 0;
+		}
+	}
+// 	b = new Block();
+	
+	if(b.type == 1) {
+		block2D[b.i]	[b.j]   = b.type;
+		block2D[b.i+1]	[b.j]   = b.type;
+		block2D[b.i]	[b.j+1] = b.type;
+		block2D[b.i+1]	[b.j+1] = b.type;
+	} 
+	if(b.type == 2) {
+		if(b.status == 0) {
+			block2D[b.i]	[b.j] = b.type;
+			block2D[b.i-1]	[b.j] = b.type;
+			block2D[b.i-2]	[b.j] = b.type;
+			block2D[b.i+1]	[b.j] = b.type;
+		} else if(b.status == 1) {
+			block2D[b.i]  [b.j]   = b.type;
+			block2D[b.i]  [b.j-1] = b.type;
+			block2D[b.i]  [b.j-2] = b.type;
+			block2D[b.i]  [b.j+1] = b.type;
+		}
+	}
+	if(b.type == 3) {
+		if(b.status == 0) {
+			block2D[b.i]	[b.j]   = b.type;
+			block2D[b.i]	[b.j+1] = b.type;
+			block2D[b.i-1]	[b.j+1] = b.type;
+			block2D[b.i+1]	[b.j]   = b.type;
+		} else if(b.status == 1) {
+			block2D[b.i]    [b.j]   = b.type;
+			block2D[b.i-1]  [b.j]   = b.type;
+			block2D[b.i-1]  [b.j-1] = b.type;
+			block2D[b.i]    [b.j+1] = b.type;
+		}
+	}
+	if(b.type == 4) {
+		if(b.status == 0) {
+			block2D[b.i]	[b.j]   = b.type;
+			block2D[b.i-1]	[b.j]   = b.type;
+			block2D[b.i]	[b.j+1] = b.type;
+			block2D[b.i+1]	[b.j+1] = b.type;
+		} else if(b.status == 1) {
+			block2D[b.i]    [b.j]   = b.type;
+			block2D[b.i]    [b.j-1] = b.type;
+			block2D[b.i-1]  [b.j]   = b.type;
+			block2D[b.i-1]  [b.j+1] = b.type;
+		}
+	}
+	if(b.type == 5) {
+		if(b.status == 0) {
+			block2D[b.i]	[b.j]   = b.type;
+			block2D[b.i]	[b.j-1] = b.type;
+			block2D[b.i]	[b.j+1] = b.type;
+			block2D[b.i-1]	[b.j+1] = b.type;
+		} else if(b.status == 1) {
+			block2D[b.i]    [b.j]   = b.type;
+			block2D[b.i-1]  [b.j]   = b.type;
+			block2D[b.i+1]  [b.j]   = b.type;
+			block2D[b.i+1]  [b.j+1] = b.type;
+		} else if(b.status == 2) {
+			block2D[b.i]    [b.j]   = b.type;
+			block2D[b.i]    [b.j-1] = b.type;
+			block2D[b.i]    [b.j+1] = b.type;
+			block2D[b.i+1]  [b.j-1] = b.type;
+		} else if(b.status == 3) {
+			block2D[b.i]    [b.j]   = b.type;
+			block2D[b.i+1]  [b.j]   = b.type;
+			block2D[b.i-1]  [b.j]   = b.type;
+			block2D[b.i-1]  [b.j-1] = b.type;
+		}
+	}
+	if(b.type == 6) {
+		if(b.status == 0) {
+			block2D[b.i]	[b.j]   = b.type;
+			block2D[b.i]	[b.j-1] = b.type;
+			block2D[b.i]	[b.j+1] = b.type;
+			block2D[b.i-1]	[b.j-1] = b.type;
+		} else if(b.status == 1) {
+			block2D[b.i]    [b.j]   = b.type;
+			block2D[b.i-1]  [b.j]   = b.type;
+			block2D[b.i+1]  [b.j]   = b.type;
+			block2D[b.i-1]  [b.j+1] = b.type;
+		} else if(b.status == 2) {
+			block2D[b.i]    [b.j]   = b.type;
+			block2D[b.i]    [b.j-1] = b.type;
+			block2D[b.i]    [b.j+1] = b.type;
+			block2D[b.i+1]  [b.j+1] = b.type;
+		} else if(b.status == 3) {
+			block2D[b.i]    [b.j]   = b.type;
+			block2D[b.i+1]  [b.j]   = b.type;
+			block2D[b.i-1]  [b.j]   = b.type;
+			block2D[b.i+1]  [b.j-1] = b.type;
+		}
+	}
+	if(b.type == 7) {
+		if(b.status == 0) {
+			block2D[b.i]	[b.j]   = b.type;
+			block2D[b.i]	[b.j-1] = b.type;
+			block2D[b.i]	[b.j+1] = b.type;
+			block2D[b.i-1]	[b.j]   = b.type;
+		} else if(b.status == 1) {
+			block2D[b.i]    [b.j]   = b.type;
+			block2D[b.i-1]  [b.j]   = b.type;
+			block2D[b.i+1]  [b.j]   = b.type;
+			block2D[b.i]    [b.j+1] = b.type;
+		} else if(b.status == 2) {
+			block2D[b.i]    [b.j]   = b.type;
+			block2D[b.i]    [b.j-1] = b.type;
+			block2D[b.i]    [b.j+1] = b.type;
+			block2D[b.i+1]  [b.j]   = b.type;
+		} else if(b.status == 3) {
+			block2D[b.i]    [b.j]   = b.type;
+			block2D[b.i+1]  [b.j]   = b.type;
+			block2D[b.i-1]  [b.j]   = b.type;
+			block2D[b.i]    [b.j-1] = b.type;
+		}
+	}
+}
+
+function my_render(){
+	var tiles = document.getElementsByClassName('tile');
+// 	var tiles = document.querySelectorAll('.tile');
+	for(var i=0; i<25; i++) {
+		for(var j=0; j<10; j++) {
+			if(displ2D[i][j] == 0){
+				tiles[i*10+j].bgColor = 'white';
+			} else if(displ2D[i][j] == 1) {
+				tiles[i*10+j].bgColor = 'FF0000';
+			} else if(displ2D[i][j] == 2) {
+				tiles[i*10+j].bgColor = 'FF8200';
+			} else if(displ2D[i][j] == 3){
+				tiles[i*10+j].bgColor = 'FFC81E';
+			} else if(displ2D[i][j] == 4){
+				tiles[i*10+j].bgColor = '80E12A';
+			} else if(displ2D[i][j] == 5){
+				tiles[i*10+j].bgColor = '0078FF';
+			} else if(displ2D[i][j] == 6){
+				tiles[i*10+j].bgColor = '0000CD';
+			} else if(displ2D[i][j] == 7){
+				tiles[i*10+j].bgColor = 'AD19EC';
+			} else if(displ2D[i][j] == 11){
+				tiles[i*10+j].bgColor = 'FF8C8C';
+			} else if(displ2D[i][j] == 12){
+				tiles[i*10+j].bgColor = 'FADCA5';
+			} else if(displ2D[i][j] == 13){
+				tiles[i*10+j].bgColor = 'FAF58C';
+			} else if(displ2D[i][j] == 14){
+				tiles[i*10+j].bgColor = 'CBFF75';
+			} else if(displ2D[i][j] == 15){
+				tiles[i*10+j].bgColor = 'C0FFFF';
+			} else if(displ2D[i][j] == 16){
+				tiles[i*10+j].bgColor = '6E6ED7';
+			} else if(displ2D[i][j] == 17){
+				tiles[i*10+j].bgColor = 'E782FF';
+			}      
+		}
+	}
+}
+
+function rotate() {
+	if(b.type == 1) {
+		
+	} else if(b.type == 2 || b.type == 3 || b.type == 4) {
+		if(b.status == 0) {
+			b.status = 1;
+		} else if(b.status == 1) {
+			b.status = 0;
+		}
+	} else if(b.type == 5 || b.type == 6 || b.type == 7) {
+		if(b.status == 0) {
+			b.status = 1;
+		} else if(b.status == 1) {
+			b.status = 2;
+		} else if(b.status == 2) {
+			b.status = 3;
+		} else if(b.status == 3) {
+			b.status = 0;
+		}
+	}
+}
+
+function setDispl2D() {
+	for(var i=0; i<25; i++) {
+		for(var j=0; j<10; j++) {
+			displ2D[i][j] = 0;
+		}
+	}
+	
+	for(var i=0; i<25; i++) {
+		for(var j=0; j<10; j++) {
+			if(block2D[i][j] > 0) {
+				displ2D[i][j] = block2D[i][j];
+			}
+			if(stack2D[i][j] > 0) {
+				displ2D[i][j] = stack2D[i][j];
+			}
+		}
+	}
+}
+
+function isBlockStack() {
+	for(var i=0; i<25; i++) {
+		for(var j=0; j<10; j++) {
+			if(block2D[i][j] > 0 && stack2D[i][j] > 0) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+function isBlockSide() {
+	var cnt = 0;
+	for(var i=0; i<25; i++) {
+		for(var j=0; j<10; j++) {
+			if(block2D[i][j] > 0) {
+				cnt++;
+			}
+		}
+	}
+	
+	if(cnt == 4) {
+		return false;
+	} else {
+		return true;
+	}
+}
+
+function moveBlock2DToStack2D(){
+	for(var i=0; i<25; i++) {
+		for(var j=0; j<10; j++) {
+			if(block2D[i][j] > 0) {
+				stack2D[i][j] = (block2D[i][j]+10);
+			}
+		}
+	}
+}
+
+function getMax10() {
+	var cnt = 0;
+	var count = 0;
+	
+	for(var i=0; i<25; i++) {
+		count = 0;
+		for(var j=0; j<10; j++) {
+			if(stack2D[i][j] > 0) {
+				count++;
+			}
+		}
+		if(count == 10) {
+			cnt++;
+			stack2D.splice(i,1);
+			stack2D.unshift([0,0,0,0,0, 0,0,0,0,0]);
+		}
+	}
+	return cnt;
+}
+
+function getMax10T() {
+	var cnt = 0;
+	for(var i=0; i<stack2D.length; i++) {
+		var l = stack2D[i];
+		if(
+			l[0]>0 && l[1]>0 && l[2]>0 && l[3]>0 && l[4]>0 &&
+			l[5]>0 && l[6]>0 && l[7]>0 && l[8]>0 && l[9]>0
+		) {
+			cnt++;
+		}
+	}
+	return cnt;
+}
+
+function cleanStack(cnt_max) {
+	var s = [];
+	
+	for(var j=0; j<cnt_max; j++) {
+		s.push([0,0,0,0,0, 0,0,0,0,0]+"");
+	}
+	
+	for(var i=0; i<stack2D.length; i++) {
+		var l = stack2D[i];
+		if(
+			!(l[0]>0 && l[1]>0 && l[2]>0 && l[3]>0 && l[4]>0 &&
+			  l[5]>0 && l[6]>0 && l[7]>0 && l[8]>0 && l[9]>0)
+		) {
+			s.push(l+"");
+		}
+	}
+// 	console.log(s);
+	
+	for(var i=0; i<25; i++) {
+		var arr_s = s[i].split(",");
+		stack2D[i][0] = arr_s[0];
+		stack2D[i][1] = arr_s[1];
+		stack2D[i][2] = arr_s[2];
+		stack2D[i][3] = arr_s[3];
+		stack2D[i][4] = arr_s[4];
+		
+		stack2D[i][5] = arr_s[5];
+		stack2D[i][6] = arr_s[6];
+		stack2D[i][7] = arr_s[7];
+		stack2D[i][8] = arr_s[8];
+		stack2D[i][9] = arr_s[9];
+		
+	}
+	
+// 	참조타입(reference 타입을 쓰다보면 생기는 오류, 주소값 꼬임), deepCopy 등 사용해야함
+//  
+// 	for(var i=0; i<25; i++) {
+// 		for(var j=0; j<10; j++) {
+// 			stack2D[i][j] = s[i][j];
+// 		}
+// 	}
+// 	console.log(stack2D);
+}
+
+function remainBlock(cnt_max) {
+	var rBlock = document.getElementById('my_remained').innerText;
+	var uBlock = rBlock - cnt_max;
+	
+	document.getElementById('my_remained').innerText = uBlock;
+	if(uBlock <= 0) {
+		flagOver = true;
+		setTimeout(() => alert("GAME OVER!!"), 100);
+	}
+}
+
+function death(){
+	for(var j=0; j<10; j++) {
+		if(stack2D[4][j] > 0) {
+			flagOver = true;
+			alert("죽음");
+		} 
+	}
+}
+
+function myclick(e) {
+	if(flagOver) return;
+	
+	var back_status = b.status;
+	var back_i = b.i;
+	var back_j = b.j;
+	
+	var flagDown = false;
+	
+	var code = e.code;
+	
+	if(code == 'ArrowUp') {
+		b.i--;
+    }
+	if(code == 'ArrowDown') {
+		b.i++;
+		flagDown = true;
+    }
+	if(code == 'ArrowLeft') {
+    	b.j--;
+    }
+	if(code == 'ArrowRight') {
+    	b.j++;
+    }
+	if(code == 'Space') {
+		rotate();
+	}
+
+// 	console.log(block2D);
+	var flagBlockErr = false;
+	
+	try {
+		setBlock2D();
+	} catch(error) {
+		flagBlockErr = true;
+	}
+	
+	setDispl2D();
+
+	// 충돌나는 3가지 경우를 확인
+	var flagBlockStack = isBlockStack();
+	var flagBlockSide = isBlockSide();
+	var flagCrush = flagBlockErr || flagBlockStack || flagBlockSide;
+	
+	// 충돌나는 경우 backup해준 데이타를 다시 받아온다.
+	if(flagCrush) {
+		b.status = back_status;
+		b.i = back_i;
+		b.j = back_j;
+		
+		setBlock2D();
+		setDispl2D();
+	}
+	
+	if(flagCrush && flagDown) {
+// 		console.log("딱");
+		moveBlock2DToStack2D();
+// 		console.log(stack2D);
+
+		var cnt_max = getMax10T();
+// 		console.log(cnt_max);
+		
+		cleanStack(cnt_max);
+		
+// 		death();
+		// 죽는거 판별
+		if(
+			stack2D[4][0] > 0 || stack2D[4][1] > 0 || stack2D[4][2] > 0 || stack2D[4][3] > 0 || stack2D[4][4] > 0 ||
+			stack2D[4][5] > 0 || stack2D[4][6] > 0 || stack2D[4][7] > 0 || stack2D[4][8] > 0 || stack2D[4][9] > 0
+		) {
+			flagOver = true;
+			alert("죽음");
+		} 
+		
+		remainBlock(cnt_max);
+		
+		b.type = parseInt(Math.random()*7 + 1);
+		b.status = 0;
+		b.i = 2;
+		b.j = 3;
+		
+		setBlock2D();
+		setDispl2D();
+	}
+	
+// 	console.log("flagCrush",flagCrush);
+	
+	my_render();
+}
+
+function fn_init() {
+	fn_tick();
+}
+
+function fn_tick() {
+// 		setInterval(() => myclick({code: 'ArrowDown'}), 200);
+// 		setTimeout(() => myclick({code: 'ArrowDown'}), 200);
+		myclick({code: 'ArrowDown'})
+		
+		setTimeout(() => fn_tick(), 200);
+}
+
+
+window.addEventListener('keydown', (e) => {
+	myclick(e);
+});
+
+</script>
+<style>
+.tile{
+	width: 20px;
+	height: 20px;
+}
+</style>
+</head>
+<body onload="fn_init()">
+TETRIS 
+남은블럭 : <span id="my_remained">50</span>
+<!-- 현재점수 : <span id="my_remained">0</span> -->
+<!-- <a href="javascript: setBlock2D()">call</a> <a href="javascript: my_render()">render</a> -->
+<table border="1">
+
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+	<tr>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+		<td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td><td class="tile"></td>
+	</tr>
+
+</table>
+</body>
+</html>
